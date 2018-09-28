@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Runtime.InteropServices;
+using System.IO;
 
 namespace COMRegistration
 {
@@ -75,8 +76,13 @@ namespace COMRegistration
                 return;
             }
 
+            //Set the current path to the same path as the files we are loading
+            //So we can get any dependency properly
+            string fileParentPath = new DirectoryInfo(args[1]).Parent.FullName;
+            Directory.SetCurrentDirectory(fileParentPath);
+
             // Load the DLL.
-            IntPtr hModuleDLL = LoadLibrary(args[1]); ;
+            IntPtr hModuleDLL = LoadLibrary(args[1]);
 
             if (hModuleDLL == IntPtr.Zero)
             {
