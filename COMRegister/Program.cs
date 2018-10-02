@@ -79,7 +79,18 @@ namespace COMRegistration
             //Set the current path to the same path as the files we are loading
             //So we can get any dependency properly
             string fileParentPath = new DirectoryInfo(args[1]).Parent.FullName;
-            Directory.SetCurrentDirectory(fileParentPath);
+
+            try
+            {
+                Directory.SetCurrentDirectory(fileParentPath);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                return;
+            }
+            
 
             // Load the DLL.
             IntPtr hModuleDLL = LoadLibrary(args[1]);
